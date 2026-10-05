@@ -152,8 +152,15 @@ const createTranscriptLink = (
   return { label: id, url };
 };
 
+/**
+ * assembly が明示されている場合はそれを優先し、sparqlist URLの文字列推定は使わない。
+ * (sparqlist URLに偶然 "grch38" を含む場合でも、明示されたGRCh37指定を上書きしないため)
+ * assembly が未指定のときだけ、従来通り sparqlist URL から推定する。
+ */
 const isGrch38 = ({ assembly, sparqlist }: VariantTranscriptParams): boolean =>
-  /^grch38$/i.test(String(assembly ?? "")) || /grch38/i.test(sparqlist ?? "");
+  assembly
+    ? /^grch38$/i.test(String(assembly))
+    : /grch38/i.test(sparqlist ?? "");
 
 const includesManeSelect = (mane: string | string[] | undefined): boolean =>
   Array.isArray(mane)
