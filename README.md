@@ -135,7 +135,7 @@ variant系stanzaは、主に SPARQList と TogoVar検索APIを使います。`va
 | `variant-mgend` | TogoVar検索API | `/api/search/variant` | TogoVar検索APIで `tgv_id` または location 検索から該当variantを取得する |
 | `variant-other-overlapping-variants` | SPARQList | `/api/variant_other_alternative_alleles` | SPARQList endpoint へ `variant` を渡し、入力variant自身は表示から除外する |
 | `variant-publication` | TogoVar検索API / SPARQList | `/api/search/variant`, `/api/tgv2rs`, `/api/variant_publication` | TogoVar検索APIで `tgv_id` に解決し、`tgv2rs` で RefSNP ID を取得してから文献を取得する |
-| `variant-summary` | SPARQList | `/api/variant_summary` | SPARQList endpoint へ `variant` を渡す。正常な空結果は値欄を空欄表示にする |
+| `variant-summary` | SPARQList | `/api/variant_summary` | SPARQList endpoint へ `variant` を渡す。該当バインディングが無い場合は「Variant not found」エラーを表示する |
 | `variant-transcript` | SPARQList | `/api/variant_transcript` | SPARQList endpoint へ `variant` を渡す |
 
 補足:
