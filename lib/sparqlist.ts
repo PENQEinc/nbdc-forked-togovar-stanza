@@ -3,9 +3,15 @@ import { unwrapValueFromBinding } from "togostanza/utils";
 import type { SparqlistStanzaParams } from "./types";
 
 /**
- * tgv_id / variant(VCF表記 CHROM-POS-REF-ALT) と追加パラメータから、
- * 空文字/未指定の項目を除いたクエリ文字列を組み立てる。
- * sparqlist側は tgv_id があればそれを優先し、無ければ variant で解決する(どちらも無ければエラー)。
+ * tgv_id / variant(VCF表記に限らずsparqlist側が受理する表記) と追加パラメータから、
+ * 空文字/未指定の項目を除いたクエリ文字列を組み立てる。この関数自体は値の有無を検証しない
+ * (空文字/undefinedは単に除外するだけで、両方無くてもエラーにはしない)。
+ * sparqlist側は tgv_id があればそれを優先し、無ければ variant で解決する。
+ * どちらも無い場合にエラーにするかは呼び出し元の責任で、sparqlist側のスクリプトが
+ * 自前でエラーを投げる場合(variant_summary等)と、stanza側で事前に
+ * assertValidVariantIdentifier を呼んで早期に分かりやすいエラーを出す場合(variant-mgend等)がある。
+ * 後者はVCF表記(CHROM-POS-REF-ALT)の厳密パースを要求するため、sparqlistがより緩い表記
+ * (例: "12:111803962:G>A")も受理するstanzaでは使えない点に注意。
  * sparqlist を必須化していないstanza(フォールバックURL方式)からも共通で使うため、
  * URL全体の組み立て(buildSparqlistApiUrl)とは切り離してある。
  */
